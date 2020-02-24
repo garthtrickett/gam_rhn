@@ -49,7 +49,7 @@ th.loss_string = "cross_entropy"
 # -----------------------------------------------------------------------------
 # Set common trainer configs
 # -----------------------------------------------------------------------------
-th.epoch = 1000
+th.epoch = 1  # STOCK 1000
 
 th.gather_note = True
 th.export_tensors_upon_validation = True
@@ -77,7 +77,7 @@ th.state_nan_protection = False
 th.terminate_on_nan = True
 
 th.lr_decay = 0.4
-th.sub_seq_len = 5000
+th.sub_seq_len = 500  # 5000 stock
 
 th.use_conveyor = True
 th.conveyor_length = 15
@@ -101,8 +101,6 @@ def activate():
     assert callable(th.model)
     model = th.model(th)
     assert isinstance(model, Classifier)
-
-
 
     # Train or evaluate
     if th.train:
