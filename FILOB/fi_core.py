@@ -8,7 +8,8 @@ for _ in range(DIR_DEPTH + 1):
     ROOT = os.path.dirname(ROOT)
     sys.path.insert(0, ROOT)
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from tframe import console, SaveMode
 from tframe import Classifier
 from tframe.trainers import SmartTrainerHub as Config
@@ -21,8 +22,8 @@ from_root = lambda path: os.path.join(ROOT, path)
 # Initialize config and set data/job dir
 # -----------------------------------------------------------------------------
 th = Config(as_global=True)
-th.data_dir = from_root("95-FI2010/data/")
-th.job_dir = from_root("95-FI2010")
+th.data_dir = from_root("FILOB/data/")
+th.job_dir = from_root("FILOB")
 # -----------------------------------------------------------------------------
 # Device configurations
 # -----------------------------------------------------------------------------
@@ -77,7 +78,7 @@ th.state_nan_protection = False
 th.terminate_on_nan = True
 
 th.lr_decay = 0.4
-th.sub_seq_len = 500  # 5000 stock
+th.sub_seq_len = 5000  # 5000 stock
 
 th.use_conveyor = True
 th.conveyor_length = 15
@@ -89,10 +90,13 @@ def activate():
     # Calculate class weights
     if th.class_weights is None and th.loss_string == "wce":
         train_targets = train_set.stack.targets.flatten()
-        samples_per_class = [sum(train_targets == c) for c in range(th.num_classes)]
+        samples_per_class = [
+            sum(train_targets == c) for c in range(th.num_classes)
+        ]
         class_weights = min(samples_per_class) / np.array(samples_per_class)
         th.class_weights = class_weights
-        console.show_status("Class weights set to {}".format(th.class_weights), "++")
+        console.show_status("Class weights set to {}".format(th.class_weights),
+                            "++")
 
     # Set input shape according to th.max_level and th.volume_only
     du.FI2010.set_input_shape()

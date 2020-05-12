@@ -1,4 +1,5 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 import fi_core as core
 import fi_mu as m
 from tframe import console
@@ -41,8 +42,7 @@ def model(th):
             kernel=th.hyper_kernel,
             gam_dropout=th.gam_dropout,
             rhn_dropout=th.rhn_dropout,
-        )
-    )
+        ))
     return m.typical(th, layers)
 
 
@@ -121,4 +121,3 @@ def main(_):
 
 if __name__ == "__main__":
     tf.app.run()
-

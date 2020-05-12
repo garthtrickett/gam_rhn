@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import to_core as core
 import to_mu as m
 from tframe import console
