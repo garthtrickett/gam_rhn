@@ -50,7 +50,7 @@ th.loss_string = "cross_entropy"
 # -----------------------------------------------------------------------------
 # Set common trainer configs
 # -----------------------------------------------------------------------------
-th.epoch = 1  # STOCK 1000
+th.epoch = 1000  # STOCK 1000
 
 th.gather_note = True
 th.export_tensors_upon_validation = True
